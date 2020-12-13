@@ -9,7 +9,7 @@ Specifications:
 -	Rooms, where user exists, are displayed at his personal page.
 -	After joining a room there is a chat, where user can communicate with other’s users.
 -	User can send, edit & delete his messages
--	User cannot delete not his messages
+-	User can delete only his messages
 -	Messages are saved to db after each sending
 -	When user joins room all messages been sent before are displayed
 
