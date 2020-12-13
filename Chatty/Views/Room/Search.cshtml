@@ -1,0 +1,30 @@
+﻿@model List<Chatty.Models.Room>
+
+<div class="container">
+    @if (Model.Count == 0)
+    {
+        <h3>Nothing was found</h3>
+    }
+    else
+    {
+        <h3>Search results: </h3>
+    }
+
+    <ul class="list-group">
+        @foreach(var room in Model)
+        {
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col">
+                        @room.Name
+                    </div>
+                    <div class="col">
+                        <a class="btn btn-success" asp-action="Individual" asp-controller="Room" asp-route-id="@room.Id">
+                            Join
+                        </a>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>

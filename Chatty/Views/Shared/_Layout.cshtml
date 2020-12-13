@@ -26,6 +26,15 @@
                         </li>
                         @if (User.Identity.IsAuthenticated)
                         {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Rooms
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Room" asp-action="Index">My rooms</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Room" asp-action="Create">Create new room</a>
+                                </div>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
                             </li>
@@ -40,6 +49,17 @@
                             </li>
                         }
                     </ul>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <form class="form-inline my-2 my-lg-0" asp-action="Search" asp-controller="Room" method="get">
+                            <input class="form-control mr-sm-2"
+                                   type="search"
+                                   placeholder="Search"
+                                   aria-label="Search"
+                                   name="name">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                    }
                 </div>
             </div>
         </nav>

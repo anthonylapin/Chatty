@@ -1,0 +1,75 @@
+﻿@model Chatty.Models.Room
+
+<div class="container">
+    <h2>Room name: @Model.Name</h2>
+
+    <form class="mt-4" method="post" asp-controller="Message" asp-action="Index">
+        <input type="hidden" name="roomId" value="@Model.Id" />
+        <div class="form-group row">
+            <label for="message" class="col-form-label">Enter a message: </label>
+            <div class="col">
+                <input type="text" name="message" class="form-control" />
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Send</button>
+    </form>
+
+    <div class="mt-4">
+        @if (Model.Messages.Count == 0)
+        {
+            <h4>No messages sent yet</h4>
+        }
+        else
+        {
+            <h4>Messages:</h4>
+            @foreach(var msg in Model.Messages)
+            {
+                <div class="card mt-2">
+                    <div class="card-body">
+                        @{ 
+                            var u = Model.Users.FirstOrDefault(u => u.Id == msg.UserId);
+                        }
+                        <div class="row">
+                            <div class="col">
+                                @u: @msg.Text
+                            </div>
+                            <div class="col">
+                                @if (User.Identity.Name == u.UserName)
+                                {
+                                    <a class="btn btn-danger text-white"
+                                       onclick="deleteMessage(@msg.Id)">
+                                        Delete message
+                                    </a>
+                                }
+                            </div>
+                            <div class="col">
+                                Was sended: @msg.Created.ToShortDateString()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    async function deleteMessage(id) {
+        try {
+            const response = await fetch(`/Message/Index/${id}`, {
+                method: "DELETE",
+            });
+            const res = await response.json();
+
+            if (!res.success) {
+                throw new Error();
+            }
+
+            location.reload();
+        } catch (e) {
+            alert("Something went wrong.");
+        }
+    }
+</script>
+}
